@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NYT Reviews</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+  <body>
+   <form>
+       <input id="reviewer" type="text" />
+     
+    <label class="form-check-label" for="exampleCheck1">Critic's Pick</label>
+  <select class="form-control" id="critics-pick">
+      <option>Y</option>
+      <option>N</option>
+
+    </select>
+       
+      </form>
+      <button id="sub" type="button" class="btn btn-primary">submit </button>
+      <div id=results>
+          
+          
+          
+          
+          
+      </div>
+      <div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">We're sorry</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>No Results Found</p>
+      </div>
+      <div class="modal-footer">
+       
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+      <script>
+      //    headline, rating, byline, publication date, short summary and the first image in the list of multimedia objects;
+//if an item isn't present in that entry, the card should indicate that;
+//if no items are returned, the page should display a specific message.
+$( "#sub" ).click(function() {
+ // alert( "Handler for .click() called." );
+     var url = "https://api.nytimes.com/svc/movies/v2/reviews/search.json?api-key=6ef74a1178bf455ab449326a6115fd22&";
+url+="reviewer="+$("reviewer").get();
+$.ajax({
+  url: url,
+  method: 'GET',
+}).done(function(result) {
+      $.each(result.results, function(i, entry) {
+          $.each(result.results, function(z, x) {
+          console.log(x);
+          $("#results").append("<pre style='height:300px;'>"+JSON.stringify(x)+"</pre>");
+      });
+         
+      });
+    //$("#results").append("<pre>"+result.results+"</pre>");
+    
+  console.log(result);
+    
+    
+    if(!result){
+        $('#myModal').modal('show');
+    }
+}).fail(function(err) {
+  throw err;
+});
+  
+ 
+});
+          
+ 
+      </script>
+  </body>
+</html>
